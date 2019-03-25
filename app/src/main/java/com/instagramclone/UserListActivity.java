@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -67,11 +68,16 @@ public class UserListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_list);
 
         final ListView listView = findViewById(R.id.listView);
-        final ArrayList<String> usernames = new ArrayList<String>();
-        final ArrayList<String> imageUrls = new ArrayList<String>();
-        final ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,usernames);
+      /*  final ArrayList<String> usernames = new ArrayList<String>();
+        final ArrayList<String> imageUrls = new ArrayList<String>();*/
+        final ArrayList<ListFeed> feeds = new ArrayList<>();
+       // final ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,usernames);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        final CustomAdapter arrayAdapter  = new CustomAdapter(this,feeds);
+
+        listView.setAdapter(arrayAdapter);
+
+      /*  listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(),UserFeedActivity.class);
@@ -82,7 +88,7 @@ public class UserListActivity extends AppCompatActivity {
         });
 
         listView.setAdapter(arrayAdapter);
-
+*/
 
         database.collection("posts")
                 .get()
@@ -91,7 +97,7 @@ public class UserListActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("Succes", document.getId() + " => " + document.getData());
+                               /* Log.d("Succes", document.getId() + " => " + document.getData());
                                 imageUrls.add(document.getData().get("imageurl").toString());
                                 Object time = document.getData().get("timestamp");
                                 if (time == null)
@@ -103,7 +109,9 @@ public class UserListActivity extends AppCompatActivity {
                                         document.getData().get("user") + " posted at " +
                                                 sdf.format(date)
                                 );
-                                arrayAdapter.notifyDataSetChanged();
+                                arrayAdapter.notifyDataSetChanged();*/
+                               feeds.add(new ListFeed(document.getData().get("user")+"",document.getData().get("imageurl")+"",document.getData().get("timestamp")+""));
+                               arrayAdapter.notifyDataSetChanged();
                             }
                         } else {
                             Log.w("Failed", "Error getting documents.", task.getException());

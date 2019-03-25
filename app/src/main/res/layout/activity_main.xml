@@ -31,8 +31,8 @@
         android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/userNameEditText"
-        android:layout_marginTop="28dp"
+        android:layout_below="@id/userIdEdittext"
+        android:layout_marginTop="18dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword" />
@@ -41,7 +41,7 @@
         android:id="@+id/signUpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/passwordEditText"
+        android:layout_below="@id/confirmPasswordEditText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="51dp"
         android:onClick="signUpClick"
@@ -51,7 +51,7 @@
         android:id="@+id/loginTextview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/passwordEditText"
+        android:layout_below="@id/confirmPasswordEditText"
         android:layout_marginStart="11dp"
         android:layout_marginTop="62dp"
         android:layout_toEndOf="@id/signUpButton"
@@ -59,4 +59,24 @@
         android:text="or, Login"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/userIdEdittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userNameEditText"
+        android:layout_marginTop="17dp"
+        android:ems="10"
+        android:hint="Username"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/confirmPasswordEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/passwordEditText"
+        android:layout_marginTop="17dp"
+        android:ems="10"
+        android:hint="Confirm Password"
+        android:inputType="textPassword" />
 </RelativeLayout>

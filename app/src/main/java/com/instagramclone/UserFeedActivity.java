@@ -42,7 +42,7 @@ public class UserFeedActivity extends AppCompatActivity {
         imageView.setImageDrawable(getResources().getDrawable(R.drawable.loading));
         linearLayout.addView(imageView);
 
-        StorageReference postReference = storageRef.child(imageUrl);
+       /* StorageReference postReference = storageRef.child(imageUrl);
         final long ONE_MEGABYTE = 1024 * 1024;
         postReference.getBytes(ONE_MEGABYTE*10).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
@@ -57,7 +57,7 @@ public class UserFeedActivity extends AppCompatActivity {
                 Toast.makeText(UserFeedActivity.this, "Download Failed!"+exception.getMessage(), Toast.LENGTH_LONG).show();
                 // Handle any errors
             }
-        });
+        });*/
 
     }
 }
