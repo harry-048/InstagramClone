@@ -1,9 +1,11 @@
 package com.instagramclone;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
@@ -16,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
@@ -35,6 +38,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,14 +56,45 @@ public class UserListActivity extends AppCompatActivity {
     StorageReference storageRef = storage.getReference();
     private FirebaseAuth mAuth;
     private String user;
+    private String username;
+
 
     @Override
     protected void onStart() {
         super.onStart();
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser!=null)
-        user=currentUser.getEmail();
+        final FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser!=null){
+            final String uid = currentUser.getUid();
+            Log.d("Auth uid",uid);
+            user=currentUser.getEmail();
+            database.collection("users")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                QuerySnapshot result = task.getResult();
+                                if (result != null)
+                                for (QueryDocumentSnapshot document : result) {
+                                    Log.d("Success", document.getId() + " => " + document.getData());
+                                    if (uid.equals(document.getData().get("UID"))){
+                                        //Toast.makeText(UserListActivity.this, "uid: "+document.getData().get("UID"), Toast.LENGTH_SHORT).show();
+                                        username=document.getData().get("username").toString();
+                                        Log.d("Auth username",username);
+                                    }
+                                }
+                                else{
+                                    Log.d("uid","is null");
+                                }
+                            } else {
+                                Log.w("Failed", "Error getting documents.", task.getException());
+                            }
+                        }
+                    });
+        }
+      //  user=currentUser.getEmail();
+
     }
 
     @Override
@@ -128,9 +163,25 @@ public class UserListActivity extends AppCompatActivity {
             Uri seletedImage = data.getData();
             if(requestCode==1 && resultCode==RESULT_OK){
                 try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),seletedImage);
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG,100,stream);
+
+                    //Toast.makeText(this, "username: "+username, Toast.LENGTH_SHORT).show();
+                    ContentResolver contentResolver=getContentResolver();
+                    MimeTypeMap mimeTypeMap=MimeTypeMap.getSingleton();
+
+
+                    String fileext= mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(seletedImage));
+                    ByteArrayOutputStream stream=null;
+                    if (fileext=="png"){
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),seletedImage);
+                        stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    }
+                    if (fileext=="jpg"){
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),seletedImage);
+                        stream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                    }
+
 
                     byte[] byteArray = stream.toByteArray();
 
@@ -147,7 +198,7 @@ public class UserListActivity extends AppCompatActivity {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                             // ...
-                            savePost(user, postRef.getName());
+                            savePost(username, postRef.getName());
                         }
                     });
 

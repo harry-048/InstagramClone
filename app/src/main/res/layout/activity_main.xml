@@ -31,8 +31,8 @@
         android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/userIdEdittext"
-        android:layout_marginTop="18dp"
+        android:layout_below="@id/userNameEditText"
+        android:layout_marginTop="17dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword" />
@@ -67,6 +67,7 @@
         android:layout_below="@+id/userNameEditText"
         android:layout_marginTop="17dp"
         android:ems="10"
+        android:visibility="invisible"
         android:hint="Username"
         android:inputType="textPersonName" />
 
@@ -79,4 +80,14 @@
         android:ems="10"
         android:hint="Confirm Password"
         android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/addusernameButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/confirmPasswordEditText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="51dp"
+        android:visibility="invisible"
+        android:text="OK" />
 </RelativeLayout>
