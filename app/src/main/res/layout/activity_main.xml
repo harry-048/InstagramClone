@@ -85,9 +85,9 @@
         android:id="@+id/addusernameButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/confirmPasswordEditText"
+        android:layout_below="@id/userIdEdittext"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="51dp"
         android:visibility="invisible"
-        android:text="OK" />
+        android:text="SIGN UP" />
 </RelativeLayout>

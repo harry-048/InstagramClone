@@ -255,13 +255,14 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
                                         // Sign in success, update UI with the signed-in user's information
                                         Log.d("Sucess", "signInWithEmail:success");
                                         FirebaseUser user = mAuth.getCurrentUser();
-                                        updateUI(user);
+                                        showUserList();
+                                       // updateUI(user);
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w("Failed", "signInWithEmail:failure", task.getException());
                                         Toast.makeText(MainActivity.this, "Login Authentication failed.",
                                                 Toast.LENGTH_SHORT).show();
-                                        updateUI(null);
+                                       // updateUI(null);
                                     }
 
                                     // ...
@@ -278,13 +279,16 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
     }
 
     public void login(View view) {
+
         Button signUpButton = (Button) findViewById(R.id.signUpButton);
         if (signupMode){
+            confirmPasswordEditText.setVisibility(View.INVISIBLE);
             signupMode=false;
             signUpButton.setText("Login");
             loginTextView.setText("or, Sign Up");
         }
         else {
+            confirmPasswordEditText.setVisibility(View.VISIBLE);
             signupMode=true;
             signUpButton.setText("Sign Up");
             loginTextView.setText("or, Login");

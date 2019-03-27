@@ -65,6 +65,7 @@ public class CustomAdapter extends ArrayAdapter<ListFeed> {
         }
         else {
             viewHolder = (ViewHolder) convertView.getTag();
+            ((ImageView)convertView.findViewById(R.id.imageView)).setImageResource(R.drawable.loading);
             result=convertView;
         }
 
