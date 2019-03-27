@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Instagram Clone</string>
+    <string name="file_uri">file:///sdcard/temporary_file.jpg</string>
 </resources>

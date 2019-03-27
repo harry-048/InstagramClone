@@ -114,6 +114,9 @@ public class UserListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_list);
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setItemViewCacheSize(20);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -189,6 +192,9 @@ public class UserListActivity extends AppCompatActivity {
                                 arrayAdapter.notifyDataSetChanged();*/
                                feeds.add(new ListFeed(document.getData().get("user")+"",document.getData().get("imageurl")+"",document.getData().get("timestamp")+""));
                                customAdapter.notifyDataSetChanged();
+
+
+
                             }
                         } else {
                             Log.w("Failed", "Error getting documents.", task.getException());
@@ -216,12 +222,12 @@ public class UserListActivity extends AppCompatActivity {
                     if (fileext=="png"){
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),seletedImage);
                         stream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 10, stream);
                     }
                     if (fileext=="jpg"){
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),seletedImage);
                         stream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 10, stream);
                     }
 
 
