@@ -16,6 +16,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -60,6 +62,9 @@ public class UserListActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String user;
     private String username;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
 
 
@@ -107,6 +112,11 @@ public class UserListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list);
+        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        recyclerView.setHasFixedSize(true);
+
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigationView);
         bottomNavigationView.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
@@ -138,9 +148,11 @@ public class UserListActivity extends AppCompatActivity {
         final ArrayList<ListFeed> feeds = new ArrayList<>();
        // final ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,usernames);
 
-        final CustomAdapter arrayAdapter  = new CustomAdapter(this,feeds);
+       /* final CustomAdapter arrayAdapter  = new CustomAdapter(this,feeds);
+        listView.setAdapter(arrayAdapter);*/
 
-        listView.setAdapter(arrayAdapter);
+        final CustomAdapterRecyclerView customAdapter = new CustomAdapterRecyclerView(feeds, this);
+        recyclerView.setAdapter(customAdapter);
 
       /*  listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -176,7 +188,7 @@ public class UserListActivity extends AppCompatActivity {
                                 );
                                 arrayAdapter.notifyDataSetChanged();*/
                                feeds.add(new ListFeed(document.getData().get("user")+"",document.getData().get("imageurl")+"",document.getData().get("timestamp")+""));
-                               arrayAdapter.notifyDataSetChanged();
+                               customAdapter.notifyDataSetChanged();
                             }
                         } else {
                             Log.w("Failed", "Error getting documents.", task.getException());
