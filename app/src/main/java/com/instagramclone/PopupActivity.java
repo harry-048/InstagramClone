@@ -1,6 +1,7 @@
 package com.instagramclone;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -24,7 +25,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class PopupActivity extends AppCompatActivity {
+public class PopupActivity extends Activity {
 
     ImageView imageView;
     TextView username;

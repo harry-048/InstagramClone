@@ -192,20 +192,20 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
 
         String confirmPassword = confirmPasswordEditText.getText().toString();
         try{
-            if (userName.isEmpty()){
-                Toast.makeText(getBaseContext(),"Email Id is required.",Toast.LENGTH_SHORT).show();
-                userNameEdittext.requestFocus();
-            }
-            else if(password.isEmpty()){
-                Toast.makeText(getBaseContext(),"Please enter password.",Toast.LENGTH_SHORT).show();
-                passwordEdittext.requestFocus();
-            }
-            else if(confirmPassword.isEmpty() || !confirmPassword.equals(password)){
-                Toast.makeText(getBaseContext(),"Please confirm password.",Toast.LENGTH_SHORT).show();
-                passwordEdittext.requestFocus();
-            }
-            else {
-                if (signupMode){
+            if (signupMode){
+                if (userName.isEmpty()){
+                    Toast.makeText(getBaseContext(),"Email Id is required.",Toast.LENGTH_SHORT).show();
+                    userNameEdittext.requestFocus();
+                }
+                else if(password.isEmpty()){
+                    Toast.makeText(getBaseContext(),"Please enter password.",Toast.LENGTH_SHORT).show();
+                    passwordEdittext.requestFocus();
+                }
+                else if(confirmPassword.isEmpty() || !confirmPassword.equals(password)){
+                    Toast.makeText(getBaseContext(),"Please confirm password.",Toast.LENGTH_SHORT).show();
+                    passwordEdittext.requestFocus();
+                }
+                else {
                     mAuth.createUserWithEmailAndPassword(userName, password)
                             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
                                         }catch(FirebaseAuthWeakPasswordException e) {
                                             Toast.makeText(MainActivity.this, "Weak Password.",
                                                     Toast.LENGTH_SHORT).show();
-                                           //  passwordEdittext.setSelection(passwordEdittext.length());
+                                            //  passwordEdittext.setSelection(passwordEdittext.length());
                                             passwordEdittext.requestFocus();
                                         } catch(FirebaseAuthInvalidCredentialsException e) {
                                             Toast.makeText(MainActivity.this, "Invalid Email.",
@@ -246,7 +246,18 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
                                     // ...
                                 }
                             });
-                }else {
+                }
+            }
+            else{
+                if (userName.isEmpty()){
+                    Toast.makeText(getBaseContext(),"Email Id is required.",Toast.LENGTH_SHORT).show();
+                    userNameEdittext.requestFocus();
+                }
+                else if(password.isEmpty()){
+                    Toast.makeText(getBaseContext(),"Please enter password.",Toast.LENGTH_SHORT).show();
+                    passwordEdittext.requestFocus();
+                }
+                else{
                     mAuth.signInWithEmailAndPassword(userName, password)
                             .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -256,13 +267,13 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
                                         Log.d("Sucess", "signInWithEmail:success");
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         showUserList();
-                                       // updateUI(user);
+                                        // updateUI(user);
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w("Failed", "signInWithEmail:failure", task.getException());
                                         Toast.makeText(MainActivity.this, "Login Authentication failed.",
                                                 Toast.LENGTH_SHORT).show();
-                                       // updateUI(null);
+                                        // updateUI(null);
                                     }
 
                                     // ...
@@ -270,6 +281,7 @@ public class MainActivity extends AppCompatActivity implements View.OnKeyListene
                             });
                 }
             }
+
         }
         catch (Exception e){
             e.printStackTrace();

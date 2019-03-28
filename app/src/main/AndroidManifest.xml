@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".PopupActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"></activity>
+            android:theme="@style/Theme.Transparent"></activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".UserFeedActivity" />
         <activity android:name=".UserListActivity" />

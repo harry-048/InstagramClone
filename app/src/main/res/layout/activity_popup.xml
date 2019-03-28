@@ -10,6 +10,7 @@
     android:background="@drawable/popupstyle"
     tools:context=".PopupActivity">
 
+
     <TextView
         android:id="@+id/nameTextview"
         android:layout_width="wrap_content"
@@ -31,10 +32,11 @@
     <ImageView
         android:id="@+id/fullimageView"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="wrap_content"
+        android:minHeight="300dp"
+        android:maxHeight="350dp"
         android:scaleType="fitCenter"
-        android:onClick="cloaseimage"
-        app:srcCompat="@android:color/holo_blue_dark" />
+        android:onClick="cloaseimage" />
 
     <View
         android:paddingTop="2dp"
@@ -50,13 +52,15 @@
         android:gravity="center"
         android:layout_height="50dp">
 
+
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="download"
-            app:srcCompat="@drawable/ic_file_download_black_24dp" />
+            android:src="@drawable/ic_file_download_black_24dp"
+            android:contentDescription="@string/todo" />
 
         <ImageView
             android:id="@+id/imageView3"
@@ -64,7 +68,8 @@
             android:layout_height="wrap_content"
             android:onClick="share"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_share_black_24dp" />
+            android:src="@drawable/ic_share_black_24dp"
+            android:contentDescription="@string/todos" />
     </LinearLayout>
 
 </LinearLayout>
