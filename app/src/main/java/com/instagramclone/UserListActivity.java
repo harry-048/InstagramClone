@@ -26,6 +26,7 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -65,6 +66,8 @@ public class UserListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
+    ImageView homeImageView;
+    ImageView settingsImageView;
 
 
 
@@ -112,6 +115,10 @@ public class UserListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list);
+
+        homeImageView= (ImageView) findViewById(R.id.homeImageView);
+        settingsImageView = (ImageView) findViewById(R.id.settingsImageView);
+
         recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemViewCacheSize(20);
@@ -176,6 +183,7 @@ public class UserListActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                /* Log.d("Succes", document.getId() + " => " + document.getData());
                                 imageUrls.add(document.getData().get("imageurl").toString());
@@ -190,6 +198,12 @@ public class UserListActivity extends AppCompatActivity {
                                                 sdf.format(date)
                                 );
                                 arrayAdapter.notifyDataSetChanged();*/
+
+                              /* if (username.equals(document.getData().get("user"))){
+                                   profileIntent.putExtra("image",document.getData().get("imageurl").toString());
+                               }*/
+
+
                                feeds.add(new ListFeed(document.getData().get("user")+"",document.getData().get("imageurl")+"",document.getData().get("timestamp")+""));
                                customAdapter.notifyDataSetChanged();
 
@@ -375,6 +389,12 @@ public class UserListActivity extends AppCompatActivity {
 
     public void logout(View view) {
 
+        /*Intent profileIntent = new Intent(getApplicationContext(),ProfileActivity.class);
+        profileIntent.putExtra("username",username);
+        startActivity(profileIntent);*/
+
+        homeImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_home_button_inactive));
+        settingsImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_user_active));
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Are you sure, You wanted to Logout?");
                 alertDialogBuilder.setPositiveButton("Yes",
@@ -391,10 +411,18 @@ public class UserListActivity extends AppCompatActivity {
         alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                homeImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_home_button_active));
+                settingsImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_user_inactive));
                 dialog.dismiss();
             }
         });
-
+        alertDialogBuilder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                homeImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_home_button_active));
+                settingsImageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_user_inactive));
+            }
+        });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }

@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,20 @@ public class PopupActivity extends Activity {
 
         bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
 
+       /* int w = bitmap.getWidth();
+        int h = bitmap.getHeight();
+        if (h<500){
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 700));
+        }
+        if (h>2000){
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1500));
+        }
+
+        *//*if (h>2000){
+            bitmap.setHeight(h/2);
+            bitmap.setWidth(w/2);
+        }*//*
+        Log.d("height and wieght",h+","+w);*/
         imageView.setImageBitmap(bitmap);
         username.setText(name);
 

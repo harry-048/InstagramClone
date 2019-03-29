@@ -4,27 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserListActivity">
-
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigationView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="?android:attr/windowBackground"
-        app:itemBackground="@color/colorPrimary"
-        android:visibility="gone"
-        app:itemIconTint="@color/common_google_signin_btn_text_dark_default"
-        app:itemTextColor="@color/common_google_signin_btn_text_dark_default"
-        app:menu="@menu/bottom_navigation"/>
-
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="47dp"
-        android:visibility="gone"
-        />
+    tools:context=".ProfileActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"
@@ -43,11 +23,12 @@
         android:layout_height="50dp">
 
         <ImageView
-            android:id="@+id/homeImageView"
+            android:id="@+id/likeImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@drawable/ic_home_button_active" />
+            android:onClick="mainpage"
+            app:srcCompat="@drawable/ic_home_button_inactive" />
 
         <ImageView
             android:id="@+id/addImageView"
@@ -55,16 +36,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="addContent"
-            app:srcCompat="@drawable/ic_plus_inactive" />
+            app:srcCompat="@drawable/ic_plus" />
 
         <ImageView
             android:id="@+id/settingsImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="logout"
-            app:srcCompat="@drawable/ic_user_inactive" />
+            app:srcCompat="@drawable/ic_user_active" />
     </LinearLayout>
-
 
 </RelativeLayout>
